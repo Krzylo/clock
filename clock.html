@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<!--
+Created using JS Bin
+http://jsbin.com
+
+Copyright (c) 2018 by Krzylo (http://jsbin.com/papehak/3/edit)
+
+Released under the MIT license: http://jsbin.mit-license.org
+-->
+<meta name="robots" content="noindex">
+<html>
+<head>
+<meta name="description" content="JS Zegar">
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>JS Zegar</title>
+  <link href="https://fonts.googleapis.com/css?family=Exo+2:100" rel="stylesheet" type="text/css">
+<style id="jsbin-css">
+* {
+margin: 0; padding: 0;
+}
+html, body {
+  height: 100%;
+  box-sizing: border-box;
+  font-size: 62.5%;
+}
+
+#clock {
+  font-family: Verdana, 'Exo 2', sans-serif;
+  font-weight: 400;
+  margin-top: -34px;
+  line-height: 6vw;
+  text-align: center;
+  background-color: #000;
+  border: 3px solid gray;
+  border-radius: 12px;
+  color: black;
+  font-size: 5vw;
+  margin: 0 auto;
+  padding: 10px;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  mix-blend-mode: screen;
+}
+p{
+  font-size: 14px;font-size:1.4rem;
+  padding: 2px;
+  letter-spacing: 3px;
+}
+.image-container {
+  background-image: url("https://www.w3schools.com/css/img_forest.jpg");
+  background-size: auto;
+  background-repeat: no-repeat;
+  position: relative;
+  height: 300px;
+  width: 600px;
+  top: 10%;
+  left: 1%;
+}
+</style>
+</head>
+<body>
+  <p id="hex">#ff00ff</p><!--remove line-->
+
+  <div class="image-container">
+    <div id="clock">
+      12:13:14
+    </div>
+  </div>
+<script id="jsbin-javascript">
+function convertToHex(intToConvert, maxNumber){
+  var hex = 255;
+  var percent = hex / maxNumber;
+  var decResult = Math.round(percent * intToConvert);
+  var hexResult = decResult.toString(16);
+  if ( hexResult.length == 1 ){
+    hexResult = 'f' + hexResult;
+  }else if(hexResult.length < 1){
+    hexResult = 'ff';
+  }
+  return hexResult;
+}
+
+
+function colorClock(){
+  var date = new Date();
+
+  var hours = date.getHours();
+  var minutes = date.getMinutes();
+  var seconds = date.getSeconds();
+  var hoursHex = convertToHex(hours, 23);
+  var minutesHex = convertToHex(minutes, 59);
+  var secondsHex = convertToHex(seconds, 59);
+
+  if (hours <= 9) {
+    hours = "0" + hours;
+  }
+  if (minutes <= 9) {
+    minutes = "0" + minutes;
+  }
+  if (seconds <= 9) {
+    seconds = "0" + seconds;
+  }
+
+  var clockFace = hours + ':' + minutes + ':' + seconds;
+  var hexColor = '#' + hoursHex + minutesHex + secondsHex;
+  //console.log(hoursHex);
+  document.getElementById('clock').innerHTML = clockFace;
+  document.getElementById('clock').style.background = hexColor;
+  document.getElementById('hex').innerHTML = hexColor;
+
+  setTimeout(function() {
+    colorClock();
+  }, 1000);
+}
+
+colorClock();
+
+/*for (var i=0; i<60; i++){
+
+*  console.log(i + ' '+convertToHex(i, 59));
+*}
+*/
+</script>
+</body>
+</html>
